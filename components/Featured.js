@@ -52,11 +52,11 @@ const Featured = () => {
               <Desc>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. </Desc>
               <ButtonsWrapper>
                 <Button
-                  outline
-                  white>
+                  outline='true'
+                  white='true'>
                   Read more
                 </Button>
-                <Button primary>
+                <Button primary='true'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     viewBox='0 0 24 24'
