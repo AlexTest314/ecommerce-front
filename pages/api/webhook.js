@@ -2,10 +2,15 @@ import { mongooseConnect } from "@/lib/mongoose";
 import { Order } from "@/models/Order";
 import { buffer } from "micro";
 import { loadStripe } from "@stripe/stripe-js";
+import Cors from "micro-cors";
 
 const stripe = await loadStripe(process.env.STRIPE_PK);
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+const cors = Cors({
+  allowMethods: ["POST", "HEAD"]
+});
 
 const handler = async (req, res) => {
   await mongooseConnect();
@@ -44,4 +49,4 @@ export const config = {
   api: { bodyParser: false }
 };
 
-export default handler;
+export default cors(handler);

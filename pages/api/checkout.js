@@ -2,13 +2,8 @@ import { mongooseConnect } from "@/lib/mongoose";
 import { Order } from "@/models/Order";
 import { Product } from "@/models/Product";
 import { loadStripe } from "@stripe/stripe-js";
-import Cors from "micro-cors";
 
 const stripe = await loadStripe(process.env.STRIPE_PK);
-
-const cors = Cors({
-  allowMethods: ["POST", "HEAD"]
-});
 
 const handler = async (req, res) => {
   if (req.method !== "POST") {
@@ -61,4 +56,4 @@ const handler = async (req, res) => {
   });
 };
 
-export default cors(handler);
+export default handler;
