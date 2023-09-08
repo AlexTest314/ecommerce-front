@@ -25,6 +25,7 @@
     "babel-plugin-styled-components": "^2.1.4",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "micro": "^10.0.1",
+    "micro-cors": "^0.1.1",
     "mongoose": "^7.5.0",
     "stripe": "^13.5.0",
     "styled-components": "^6.0.7"

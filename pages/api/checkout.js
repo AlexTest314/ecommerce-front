@@ -2,8 +2,13 @@ import { mongooseConnect } from "@/lib/mongoose";
 import { Order } from "@/models/Order";
 import { Product } from "@/models/Product";
 import { loadStripe } from "@stripe/stripe-js";
+import Cors from "micro-cors";
 
 const stripe = await loadStripe(process.env.STRIPE_PK);
+
+const cors = Cors({
+  allowMethods: ["POST", "HEAD"]
+});
 
 const handler = async (req, res) => {
   if (req.method !== "POST") {
@@ -51,10 +56,9 @@ const handler = async (req, res) => {
     cancel_url: process.env.PUBLIC_URL + "/cart?canceled=1",
     metadata: { orderId: orderDoc._id.toString() }
   });
-
   res.json({
     url: session.url
   });
 };
 
-export default handler;
+export default cors(handler);
