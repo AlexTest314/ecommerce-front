@@ -35,7 +35,12 @@ const CartContextProvider = ({ children }) => {
       return prev;
     });
   };
-  return <CartContext.Provider value={{ cartProducts, setCartProducts, addProduct, removeProduct }}>{children}</CartContext.Provider>;
+
+  const clearCart = () => {
+    setCartProducts([]);
+    ls?.setItem("cart", JSON.stringify(cartProducts));
+  };
+  return <CartContext.Provider value={{ cartProducts, setCartProducts, addProduct, removeProduct, clearCart }}>{children}</CartContext.Provider>;
 };
 
 export default CartContextProvider;

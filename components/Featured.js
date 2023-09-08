@@ -48,7 +48,7 @@ const ButtonsWrapper = styled.div`
 const Featured = ({ product }) => {
   const { setCartProducts, addProduct } = useContext(CartContext);
   const addCartContextProvider = () => {
-    addProduct(product.id);
+    addProduct(product._id);
   };
   return (
     <BgColor>

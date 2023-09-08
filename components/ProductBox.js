@@ -54,7 +54,7 @@ const ProductBox = ({ product }) => {
 
   const addProductToCart = () => addProduct(_id);
 
-  const url = `/product ${_id}`;
+  const url = `/product/${_id}`;
 
   return (
     <ProductWrapper>

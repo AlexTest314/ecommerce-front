@@ -25,7 +25,7 @@ const handler = async (req, res) => {
         price_data: {
           currency: "USD",
           product_data: { name: productInfo.title },
-          unit_amount: quantity * productInfo.price * 100
+          unit_amount: productInfo.price * 100
         }
       });
     }
@@ -37,14 +37,15 @@ const handler = async (req, res) => {
     city,
     postalCode,
     streetAddress,
-    country
+    country,
+    paid: false
   });
 
   const session = await stripe.checkout.sessions.create({
     line_items,
     mode: "payment",
     customer_email: email,
-    success_url: process.env.PUBLIC_URL + "/cart?seccess=1",
+    success_url: process.env.PUBLIC_URL + "/cart?success=1",
     cancel_url: process.env.PUBLIC_URL + "/cart?canceled=1",
     metadata: { orderId: orderDoc._id.toString() }
   });
