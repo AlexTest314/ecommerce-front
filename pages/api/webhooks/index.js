@@ -2,7 +2,7 @@ import { mongooseConnect } from "@/lib/mongoose";
 import { Order } from "@/models/Order";
 import { buffer } from "micro";
 import Cors from "micro-cors";
-import { stripe } from "../../../lib/stripe";
+import { stripe } from "@/lib/stripe";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
