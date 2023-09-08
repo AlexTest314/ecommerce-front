@@ -29,19 +29,22 @@ const webhookHandler = async (req, res) => {
     console.log("✅ Success:", event.id);
 
     // Handle the event
-
-    switch (event.type) {
-      case "checkout.session.completed":
-        const data = event.data;
-        const orderId = data.metadata.orderId;
-        const paid = data.payment_status === "paid";
-        if (orderId && paid) {
-          await Order.findByIdAndUpdate(orderId, { paid: true });
-        }
-        // Then define and call a function to handle the event payment_intent.succeeded
-        break;
-      default:
-        console.log(`Unhandled event type ${event.type}`);
+    try {
+      switch (event.type) {
+        case "checkout.session.completed":
+          const data = event.data;
+          const orderId = data.metadata.orderId;
+          const paid = data.payment_status === "paid";
+          if (orderId && paid) {
+            await Order.findByIdAndUpdate(orderId, { paid: true });
+          }
+          // Then define and call a function to handle the event payment_intent.succeeded
+          break;
+        default:
+          console.log(`Unhandled event type ${event.type}`);
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   }
   res.status(200).send("ok");
