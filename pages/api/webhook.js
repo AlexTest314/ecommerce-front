@@ -1,8 +1,8 @@
 import { mongooseConnect } from "@/lib/mongoose";
-import { Order } from "@/models/Order";
 import { buffer } from "micro";
 import Cors from "micro-cors";
 import { stripe } from "@/lib/stripe";
+import { Order } from "@/models/Order";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -34,7 +34,6 @@ const webhookHandler = async (req, res) => {
       const paid = data.payment_status === "paid";
       if (orderId && paid) {
         await Order.findByIdAndUpdate(orderId, { paid: true });
-        await Order.findByIdAndRemove("64fb6bb2a0c09d0a3350f812");
       }
       // Then define and call a function to handle the event payment_intent.succeeded
       break;

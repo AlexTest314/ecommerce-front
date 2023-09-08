@@ -41,16 +41,15 @@ const handler = async (req, res) => {
     paid: false
   });
 
-  const params = {
+  const session = await stripe.checkout.sessions.create({
     line_items,
     mode: "payment",
     customer_email: email,
     success_url: process.env.PUBLIC_URL + "/cart?success=1",
     cancel_url: process.env.PUBLIC_URL + "/cart?canceled=1",
     metadata: { orderId: orderDoc._id.toString() }
-  };
+  });
 
-  const session = await stripe.checkout.sessions.create(params);
   res.json({
     url: session.url
   });
