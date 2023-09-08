@@ -1,16 +1,14 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Order } from "@/models/Order";
 import { Product } from "@/models/Product";
-import { loadStripe } from "@stripe/stripe-js";
-
-const stripe = await loadStripe(process.env.STRIPE_PK);
+import { stripe } from "../../../lib/stripe";
 
 const handler = async (req, res) => {
   if (req.method !== "POST") {
     res.json("should be a POST request");
     return;
   }
-  const { name, email, city, postalCode, streetAddress, country, products, cartProducts } = req.body;
+  const { name, email, city, postalCode, streetAddress, country, cartProducts } = req.body;
   await mongooseConnect();
   const productsIds = cartProducts;
   const uniqueIds = [...new Set(productsIds)];
@@ -43,14 +41,16 @@ const handler = async (req, res) => {
     paid: false
   });
 
-  const session = await stripe.checkout.sessions.create({
+  const params = {
     line_items,
     mode: "payment",
     customer_email: email,
     success_url: process.env.PUBLIC_URL + "/cart?success=1",
     cancel_url: process.env.PUBLIC_URL + "/cart?canceled=1",
     metadata: { orderId: orderDoc._id.toString() }
-  });
+  };
+
+  const session = await stripe.checkout.sessions.create(params);
   res.json({
     url: session.url
   });
