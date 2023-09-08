@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { styled } from "styled-components";
-import { ButtonStyle } from "./Button";
+import Button, { ButtonStyle } from "./Button";
 
 const StyledLink = styled(Link)`
   ${ButtonStyle}

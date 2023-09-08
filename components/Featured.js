@@ -5,6 +5,8 @@ import ImageTest from "../img/hdg72rc3q61.png";
 import Button from "./Button";
 import ButtonLink from "./ButtonLink";
 import CartIcon from "./icons/CartIcon";
+import { useContext } from "react";
+import { CartContext } from "./CartContext";
 
 const BgColor = styled.div`
   background-color: #222;
@@ -44,6 +46,10 @@ const ButtonsWrapper = styled.div`
 `;
 
 const Featured = ({ product }) => {
+  const { setCartProducts, addProduct } = useContext(CartContext);
+  const addCartContextProvider = () => {
+    addProduct(product.id);
+  };
   return (
     <BgColor>
       <Center>
@@ -55,11 +61,14 @@ const Featured = ({ product }) => {
               <ButtonsWrapper>
                 <ButtonLink
                   href={`/products/${product._id}`}
-                  outline='true'
-                  white='true'>
+                  outline={1}
+                  white={1}>
                   Read more
                 </ButtonLink>
-                <Button white={true}>
+                <Button
+                  type='button'
+                  white={1}
+                  onClick={addCartContextProvider}>
                   <CartIcon />
                   Add to cart
                 </Button>

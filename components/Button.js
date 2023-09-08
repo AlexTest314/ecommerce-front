@@ -17,12 +17,12 @@ export const ButtonStyle = css`
     margin-right: 5px;
   }
   ${(props) =>
-    props.white &&
-    !props.outline &&
+    props.block &&
     css`
-      background-color: #fff;
-      color: #000;
-    `};
+      display: block;
+      width: 100%;
+    `}
+
   ${(props) =>
     props.primary &&
     !props.outline &&
@@ -50,11 +50,33 @@ export const ButtonStyle = css`
     `};
   ${(props) =>
     props.white &&
+    !props.outline &&
+    css`
+      background-color: #fff;
+      color: #000;
+    `};
+  ${(props) =>
+    props.white &&
     props.outline &&
     css`
       background-color: transparent;
       color: #fff;
       border: 1px solid #fff;
+    `};
+  ${(props) =>
+    props.black &&
+    !props.outline &&
+    css`
+      background-color: #000;
+      color: #fff;
+    `};
+  ${(props) =>
+    props.black &&
+    props.outline &&
+    css`
+      background-color: transparent;
+      color: #000;
+      border: 1px solid #000;
     `};
 `;
 
@@ -62,9 +84,12 @@ const StyledButton = styled.button`
   ${ButtonStyle}
 `;
 
-const Button = ({ children, size, primary, white, outline }) => {
+const Button = ({ children, size, primary, white, outline, onClick, block, black }) => {
   return (
     <StyledButton
+      black={black}
+      block={block}
+      onClick={onClick}
       outline={outline}
       white={white}
       size={size}
