@@ -1,7 +1,7 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Order } from "@/models/Order";
 import { Product } from "@/models/Product";
-import { stripe } from "../../../lib/stripe";
+import { stripe } from "@/lib/stripe";
 
 const handler = async (req, res) => {
   if (req.method !== "POST") {
