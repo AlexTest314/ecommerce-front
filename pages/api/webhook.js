@@ -1,18 +1,21 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Order } from "@/models/Order";
-const stripe = require("stripe")(process.env.STRIPE_SK);
 import { buffer } from "micro";
+import { loadStripe } from "@stripe/stripe-js";
 
-const endpointSecret = "whsec_1b04b8c5b3d3478b057e882a2c51374a21e016b84dd24a4f0b3733a9f53975cd";
+const stripe = await loadStripe(process.env.STRIPE_SK);
+
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 const handler = async (req, res) => {
   await mongooseConnect();
+  const buf = await buffer(req);
   const sig = req.headers["stripe-signature"];
 
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(await buffer(req), sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(buf.toString(), sig, webhookSecret);
   } catch (err) {
     res.status(400).send(`Webhook Error: ${err.message}`);
     return;

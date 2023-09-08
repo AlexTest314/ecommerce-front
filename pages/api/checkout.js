@@ -1,7 +1,9 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Order } from "@/models/Order";
 import { Product } from "@/models/Product";
-const stripe = require("stripe")(process.env.STRIPE_SK);
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripe = await loadStripe(process.env.STRIPE_SK);
 
 const handler = async (req, res) => {
   if (req.method !== "POST") {
