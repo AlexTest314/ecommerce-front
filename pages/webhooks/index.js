@@ -32,7 +32,7 @@ const webhookHandler = async (req, res) => {
     try {
       switch (event.type) {
         case "checkout.session.completed":
-          const data = event.data.object;
+          const data = event.data;
           const orderId = data.metadata.orderId;
           const paid = data.payment_status === "paid";
           if (orderId && paid) {
@@ -44,7 +44,7 @@ const webhookHandler = async (req, res) => {
           console.log(`Unhandled event type ${event.type}`);
       }
     } catch (error) {
-      console.log(error);
+      console.log("error", error.message);
     }
   }
   res.status(200).send("ok");
