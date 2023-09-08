@@ -3,7 +3,7 @@ import { Order } from "@/models/Order";
 import { buffer } from "micro";
 import { loadStripe } from "@stripe/stripe-js";
 
-const stripe = await loadStripe(process.env.STRIPE_SK);
+const stripe = await loadStripe(process.env.STRIPE_PK);
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 

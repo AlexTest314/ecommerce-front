@@ -3,7 +3,7 @@ import { Order } from "@/models/Order";
 import { Product } from "@/models/Product";
 import { loadStripe } from "@stripe/stripe-js";
 
-const stripe = await loadStripe(process.env.STRIPE_SK);
+const stripe = await loadStripe(process.env.STRIPE_PK);
 
 const handler = async (req, res) => {
   if (req.method !== "POST") {
