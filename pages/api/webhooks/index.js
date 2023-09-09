@@ -36,8 +36,10 @@ const webhookHandler = async (req, res) => {
           }
           console.log(`💰 CheckoutSession status: ${data.payment_status}`);
           break;
-        case "payment_intent.failed":
+        case "invoice.payment_succeeded":
           data = event.data.object;
+          const orderIdSuccessed = data.metadata.orderId;
+          await Order.findByIdAndUpdate(orderIdSuccessed, { paid: true });
           console.log(`❌ Payment failed: ${data.last_payment_error?.message}`);
           break;
         case "payment_intent.succeeded":
