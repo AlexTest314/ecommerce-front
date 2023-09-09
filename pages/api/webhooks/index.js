@@ -20,10 +20,6 @@ const webhookHandler = async (req, res) => {
     return;
   }
 
-  const permittedEvents = ["checkout.session.completed", "payment_intent.succeeded", "payment_intent.payment_failed"];
-
-  if (permittedEvents.includes(event.type)) {
-    let data;
 
     try {
       switch (event.type) {
