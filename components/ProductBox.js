@@ -69,10 +69,10 @@ const ProductBox = ({ product }) => {
     <ProductWrapper>
       <WhiteBox href={url}>
         <div>
-          {/* <img
-        src={images[0]}
-        alt='image'
-      /> */}
+          <img
+            src={product.images[0]}
+            alt='image'
+          />
         </div>
       </WhiteBox>
       <ProductInfoBox>

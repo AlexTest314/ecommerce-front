@@ -41,7 +41,7 @@ const ProductPage = ({ product }) => {
       <Center>
         <ColWrap>
           <WhiteBox>
-            <ProductImages images='product.images' />
+            <ProductImages images={product.images} />
           </WhiteBox>
 
           <div>

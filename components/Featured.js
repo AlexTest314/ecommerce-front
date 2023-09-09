@@ -1,7 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
 import Center from "./Center";
-import ImageTest from "../img/hdg72rc3q61.png";
 import Button from "./Button";
 import ButtonLink from "./ButtonLink";
 import CartIcon from "./icons/CartIcon";
@@ -96,7 +95,7 @@ const Featured = ({ product }) => {
 
           <Column>
             <img
-              src={ImageTest.src}
+              src={product.images[0]}
               alt='photo_note'
             />
           </Column>
