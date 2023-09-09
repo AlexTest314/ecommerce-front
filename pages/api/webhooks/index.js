@@ -20,39 +20,38 @@ const webhookHandler = async (req, res) => {
     return;
   }
 
-
-    try {
-      switch (event.type) {
-        case "checkout.session.completed":
-          const data = event.data.object;
-          const orderId = data.metadata.orderId;
-          const paid = data.payment_status === "paid";
-          if (orderId && paid) {
-            await Order.findByIdAndUpdate(orderId, { paid: true });
-          }
-          console.log(`💰 CheckoutSession status: ${data.payment_status}`);
-          break;
-        case "invoice.payment_succeeded":
-          data = event.data.object;
-          const orderIdSuccessed = data.metadata.orderId;
-          await Order.findByIdAndUpdate(orderIdSuccessed, { paid: true });
-          console.log(`❌ Payment failed: ${data.last_payment_error?.message}`);
-          break;
-        case "payment_intent.succeeded":
-          data = event.data.object;
-          console.log(`💰 PaymentIntent status: ${data.status}`);
-          break;
-        default:
-          throw new Error(`Unhhandled event: ${event.type}`);
-      }
-    } catch (error) {
-      console.log(error);
+  try {
+    switch (event.type) {
+      case "checkout.session.completed":
+        const data = event.data.object;
+        const orderId = data.metadata.orderId;
+        const paid = data.payment_status === "paid";
+        if (orderId && paid) {
+          await Order.findByIdAndUpdate(orderId, { paid: true });
+        }
+        console.log(`💰 CheckoutSession status: ${data.payment_status}`);
+        break;
+      case "invoice.payment_succeeded":
+        data = event.data.object;
+        const orderIdSuccessed = data.metadata.orderId;
+        await Order.findByIdAndUpdate(orderIdSuccessed, { paid: true });
+        console.log(`❌ Payment failed: ${data.last_payment_error?.message}`);
+        break;
+      case "payment_intent.succeeded":
+        data = event.data.object;
+        console.log(`💰 PaymentIntent status: ${data.status}`);
+        break;
+      default:
+        throw new Error(`Unhhandled event: ${event.type}`);
     }
+  } catch (error) {
+    console.log(error);
   }
+};
 
-  // Handle the event
+// Handle the event
 
-  /*   switch (event.type) {
+/*   switch (event.type) {
     case "checkout.session.completed":
       const data = event.data;
       const orderId = data.metadata.orderId;
@@ -68,7 +67,7 @@ const webhookHandler = async (req, res) => {
 
   res.status(200).send("ok");
 }; */
-};
+
 export const config = {
   api: { bodyParser: false }
 };
