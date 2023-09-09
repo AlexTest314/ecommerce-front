@@ -48,7 +48,6 @@ const webhookHandler = async (req, res) => {
       }
     } catch (error) {
       console.log(error);
-      return NextResponse.json({ message: "Webhook handler failed" }, { status: 500 });
     }
   }
 
