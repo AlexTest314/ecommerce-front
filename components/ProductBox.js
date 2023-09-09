@@ -36,15 +36,24 @@ const ProductInfoBox = styled.div`
 `;
 
 const PriceRow = styled.div`
-  display: flex;
+  display: block;
   align-items: center;
   justify-content: space-between;
   margin-top: 2px;
+  @media screen and (min-width: 768px) {
+    display: flex;
+    gap: 5px;
+  }
 `;
 
 const Price = styled.div`
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: right;
+  @media screen and (min-width: 768px) {
+    font-size: 1.2rem;
+    text-align: left;
+  }
 `;
 
 const ProductBox = ({ product }) => {
@@ -71,6 +80,7 @@ const ProductBox = ({ product }) => {
         <PriceRow>
           <Price>${price}</Price>
           <Button
+            block={1}
             onClick={addProductToCart}
             primary={1}
             outline={1}>
