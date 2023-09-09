@@ -1,6 +1,6 @@
-import { mongooseConnect } from "@/lib/mongoose";
 import { buffer } from "micro";
 import { stripe } from "@/lib/stripe";
+import { mongooseConnect } from "@/lib/mongoose";
 import { Order } from "@/models/Order";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -14,6 +14,7 @@ const webhookHandler = async (req, res) => {
 
   try {
     event = stripe.webhooks.constructEvent(buf.toString(), sig, webhookSecret);
+    console.log("event", event);
   } catch (err) {
     res.status(400).send(`Webhook Error: ${err.message}`);
     return;
