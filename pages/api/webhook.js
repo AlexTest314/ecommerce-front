@@ -1,18 +1,11 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { buffer } from "micro";
-import Cors from "micro-cors";
 import { stripe } from "@/lib/stripe";
 import { Order } from "@/models/Order";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-const cors = Cors({
-  allowMethods: ["POST", "HEAD"]
-});
-
 const webhookHandler = async (req, res) => {
-  await mongooseConnect();
-
   const buf = await buffer(req);
   const sig = req.headers["stripe-signature"];
 
@@ -29,6 +22,7 @@ const webhookHandler = async (req, res) => {
 
   if (permittedEvents.includes(event.type)) {
     let data;
+    await mongooseConnect();
 
     try {
       switch (event.type) {
@@ -81,4 +75,4 @@ export const config = {
   api: { bodyParser: false }
 };
 
-export default cors(webhookHandler);
+export default webhookHandler;
