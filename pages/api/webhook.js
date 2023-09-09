@@ -6,6 +6,7 @@ import { Order } from "@/models/Order";
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 const webhookHandler = async (req, res) => {
+  await mongooseConnect();
   const buf = await buffer(req);
   const sig = req.headers["stripe-signature"];
 
@@ -22,12 +23,11 @@ const webhookHandler = async (req, res) => {
 
   if (permittedEvents.includes(event.type)) {
     let data;
-    await mongooseConnect();
 
     try {
       switch (event.type) {
         case "checkout.session.completed":
-          const data = event.data;
+          const data = event.data.object;
           const orderId = data.metadata.orderId;
           const paid = data.payment_status === "paid";
           if (orderId && paid) {
